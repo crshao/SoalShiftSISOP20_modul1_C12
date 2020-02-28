@@ -17,7 +17,7 @@ c. Tampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling s
 a. Menentukan wilayah bagian (region) mana yang memiliki keuntungan (profit) paling sedikit<br>
    Langkah pertama kita harus mengolah data pada file "Sample-Superstore.tsv" terlebih dahulu untuk mendapatkan keuntungan di tiap region, kemudian kita bandingkan mana yang memiliki keuntungan paling rendah. Berikut source code nya
    
-```sh
+```awk
 
 #!/bin/bash
 
@@ -33,11 +33,11 @@ awk -F '\t' '{ if ($13 != "Region") a[$13]+=$21;} END{ bool=1;for(i in a)
 
 ```
 + Pertama, kita tentukan bahwa separator file tersebut adalah tab lalu kita mengelompokkan kolom region yaitu kolom ke 13 dan menjumlahkan tiap nilai profit dari masing-masing region
-```sh
+```awk
 awk -F '\t' '{ if ($13 != "Region") a[$13]+=$21;}
 ```
 + Hasil dari pengelompokan tersebut dimasukkan ke array a yang terdiri dari nilai profit tiap region. Kemudian melakukan looping untuk mencari nilai minimul dari array tersebut.
-```sh
+```awk
 { bool=1;for(i in a)
 {
  if(bool==1){min=a[i];bool=0}
@@ -52,7 +52,7 @@ awk -F '\t' '{ if ($13 != "Region") a[$13]+=$21;}
 b. Menentukan 2 negara bagian (state) yang memiliki keuntungan (profit) paling sedikit berdasarkan hasil poin a
     Untuk dapat menentukan 2 state tersebut, maka kita mengambil nilai dari kolom state yang berada di region Central yang sudah didapat di point a, kemudian mengelompokkan kolom state tersebut sesuai namanya untuk bisa mendapatkan jumlah profit tiap statenya dan mencari minimal nya. Berikut source code nya: 
 
-```bash
+```awk
  #!/bin/bash
 
 awk -F'\t' '{if($13 == "Central") a[$11]+=$21;}END{bool=1;for(i in a)
@@ -65,11 +65,11 @@ awk -F'\t' '{if($13 == "Central") a[$11]+=$21;}END{bool=1;for(i in a)
 }' Sample-Superstore.tsv
 ```
 + Langkah pertama kita mengambil nilai dari kolom state kolom ke 11 yang berada di region Central yang sudah didapat di point a, kemudian mengelompokkan kolom state tersebut sesuai namanya dan dimasukkan ke array a. Kemudian mengisi array a dengan jumah profit tiap-tiap state yang bisa diambil di kolom 21
-```bash
+```awk
 awk -F'\t' '{if($13 == "Central") a[$11]+=$21;}
 ```
 + Langkah kedua yaitu mencari 2 nilai minimal nya dengan menggunakan looping for
-```bash
+```awk
 {bool=1;for(i in a)
 {
  if(bool==1){min1=a[i];min2=min1;bool=0}
@@ -83,7 +83,7 @@ awk -F'\t' '{if($13 == "Central") a[$11]+=$21;}
 c. Menentukan 10 produk (product name) yang memiliki keuntungan (profit) paling sedikit berdasarkan 2 negara bagian (state) hasil poin b
    Untuk dapat menentukan 10 produk tersebut, maka kita mengambil nilai dari kolom produk yang berasal dari negara bagian Illinois dan Texas yang sudah didapat di point b, kemudian mengelompokkan kolom produk tersebut tersebut sesuai namanya untuk bisa mendapatkan jumlah profit tiap produknyanya dan mencari minimal nya
 
-```bash
+```awk
 awk -F'\t' '{if($11 == "Illinois"|| $11 == "Texas") a[$17]+=$21;}END{for(x=0;x<10;x++) {{bool=1;for(i in a)
 {
  if(bool==1){min=a[i];bool=0}
