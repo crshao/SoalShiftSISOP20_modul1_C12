@@ -115,6 +115,8 @@ nama file bisa kembali.
 ## Jawab
 a. Membuat sebuah script bash yang dapat menghasilkan password secara acak sebanyak 28 karakter yang terdapat huruf
 besar, huruf kecil, dan angka.
+b. Password acak tersebut disimpan pada file berekstensi
+.txt dengan nama berdasarkan argumen yang diinputkan dan HANYA berupa alphabet.
 
 ```awk
 #!/bin/bash
@@ -151,5 +153,83 @@ echo "$a;$b" >> log.csv
 ```
 <br>
 
-b. Password acak tersebut disimpan pada file berekstensi
-.txt dengan nama berdasarkan argumen yang diinputkan dan HANYA berupa alphabet.
+c.Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan di
+enkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
+dengan jam(0-23) dibuatnya file tersebut dengan program terpisah dengan (misal:
+password.txt dibuat pada jam 01.28 maka namanya berubah menjadi qbttxpse.txt
+dengan perintah ‘bash soal2_enkripsi.sh password.txt’. Karena p adalah huruf ke 16 dan
+file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula
+seterusnya. Apabila melebihi z, akan kembali ke a, contoh: huruf w dengan jam 5.28,
+maka akan menjadi huruf b.)
+
+```awk
+#!/bin/bash
+x="$1"
+
+jam=`awk -v x=$x -F ";" 'FNR>1 {if(match($1, x))print $2}' log.csv`
+
+alphabet1=`expr $jam + 97`
+
+alphabetBeforeValue=`expr $jam + 97`
+
+alphabetBefore=`awk -v x=$alphabetBeforeValue 'BEGIN{printf "%c",x}'`
+
+alphabetAfterValue=`expr $alphabetBeforeValue - 1`
+
+alphabetAfter=`awk -v x=$alphabetAfterValue 'BEGIN{printf "%c",x}'`
+
+newName=`echo $x | tr '[a-z]' '['$alphabetBefore'-za-'$alphabetAfter']'`
+
+echo "$newName;$jam" >> log.csv
+mv $x.txt $newName.txt
+```
++ Declare sebuah variable untuk menampung parameter yang dimasukkan, yang disebut a, kemudian, buat variable untuk mengambil data dari log.csv dengan kunci nama file yang diberikan. Kemudian buat variabel untuk menampung huruf ASCII 'a' + jam yang disebut alphabetBeforeValue. Kemudian variabel selanjutnya adalah untuk menampung nilai dari karakter ASCII yang disebut alphabetBefore.
+```awk
+x="$1"
+
+jam=`awk -v x=$x -F ";" 'FNR>1 {if(match($1, x))print $2}' log.csv`
+
+alphabet1=`expr $jam + 97`
+
+alphabetBeforeValue=`expr $jam + 97`
+
+alphabetBefore=`awk -v x=$alphabetBeforeValue 'BEGIN{printf "%c",x}'`
+```
++ Kemudian perlu dideklarasi lagi variabel untuk menampung nilai satu huruf sebelum karakter alphabetBefore yang disebut alphabetAfterValue, dan juga variabel untuk menampung karakter tersebut yang disebut alphabetAfter, variabel newName berfungsi untuk menampung nama file yang baru dan dimasukkan ke dalam log agar bisa di dekrip kembali. Pada baris terakhir adalah proses rename file.
+```awk
+alphabetAfterValue=`expr $alphabetBeforeValue - 1`
+
+alphabetAfter=`awk -v x=$alphabetAfterValue 'BEGIN{printf "%c",x}'`
+
+newName=`echo $x | tr '[a-z]' '['$alphabetBefore'-za-'$alphabetAfter']'`
+
+echo "$newName;$jam" >> log.csv
+mv $x.txt $newName.txt
+```
+<br>
+d. jangan lupa untuk membuat dekripsinya supaya
+nama file bisa kembali.
+```awk
+#!/bin/bash
+x="$1"
+
+jam=`awk -v x=$x -F ";" 'FNR>1 {if(match($1, x))print $2}' log.csv`
+
+#alphabet1=`expr $jam + 97`
+
+alphabetBeforeValue=`expr $jam + 97`
+
+alphabetBefore=`awk -v x=$alphabetBeforeValue 'BEGIN{printf "%c",x}'`
+echo $alphabetBefore
+
+alphabetAfterValue=`expr $alphabetBeforeValue - 1`
+
+alphabetAfter=`awk -v x=$alphabetAfterValue 'BEGIN{printf "%c",x}'`
+echo $alphabetAkhir
+echo $x
+
+newName=`echo $x | tr '['$alphabetBefore'-za-'$alphabetAfter']' '[a-z]'`
+
+echo "$newName"
+mv $x.txt $newName.txt
+```
