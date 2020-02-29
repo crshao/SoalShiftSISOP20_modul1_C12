@@ -93,3 +93,4 @@ awk -F'\t' '{if($11 == "Illinois"|| $11 == "Texas") a[$17]+=$21;}END{for(x=0;x<1
 }}' Sample-Superstore.tsv
 ```
 
+# Soal2
