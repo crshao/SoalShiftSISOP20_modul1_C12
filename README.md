@@ -233,3 +233,4 @@ newName=`echo $x | tr '['$alphabetBefore'-za-'$alphabetAfter']' '[a-z]'`
 echo "$newName"
 mv $x.txt $newName.txt
 ```
++ Pada file dekrip, kebanyakan command yang digunakan mirip dengan pada file enkripsi. Pertama kita declare variable untuk menampung parameter yang disebut a. Kemudian variable jam untuk menampung data yang diambil dari log.csv. Kemudian deklarasi variable untuk menampung huruf ASCII 'a' + jam yang disebut alphabetBeforeValue, dan juga variabel untuk menampung nilai dari karakter ASCII.
