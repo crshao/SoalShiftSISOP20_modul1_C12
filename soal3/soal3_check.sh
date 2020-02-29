@@ -1,8 +1,5 @@
 #!/bin/bash
 
-kcount=$(ls -l kenangan | wc -l)
-dcount=$(ls -l duplicate | wc -l)
-
 for ((i=1 ; $i<=28 ; i++))
 do
 	wget -O "pdkt_kusuma_$i" "https://loremflickr.com/320/240/cat" -a "wget.log"
