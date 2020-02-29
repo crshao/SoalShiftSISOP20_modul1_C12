@@ -17,11 +17,11 @@ temp1=$(ls kenangan/ |awk -F '_' '{print $2}' | sort -rn | head -1)
 awk -F '\t' -v temp=$temp -v temp1=$temp1 '{ i = $2+0; 
 		if( L != $1 ){
 			  L = $1; 
-			  move = " mv pdkt_kusuma_" i " kenangan/kenangan_" count2+1 ; count2++; }
+			  move = " mv pdkt_kusuma_" i " kenangan/kenangan_" temp1+1 ; temp1++; }
 				system(move); } 
   		else if( L == $1 ) { 
 			
-			move = " mv pdkt_kusuma_" i " duplicate/duplicate_" count1+1; count1++; } ' file.log 
+			move = " mv pdkt_kusuma_" i " duplicate/duplicate_" temp+1; temp++; } ' file.log 
 
 for name in *.log; 
 do 
