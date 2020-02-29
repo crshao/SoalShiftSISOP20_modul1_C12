@@ -8,26 +8,25 @@ do
 	wget -O "pdkt_kusuma_$i" "https://loremflickr.com/320/240/cat" -a "wget.log"
 done
 
-for ((i=1 ; $i<=28 ; i++))
-do
-	for ((j=$((i+1)) ; $j<=28 ; j++))
-	do
-		value=$(compare -metric AE pdkt_kusuma_$i pdkt_kusuma_$j null: 2>&1)
-		if [[ $value == 0 ]]
-		then
-			mv pdkt_kusuma_$j duplicate/duplicate_$dcount
-			dcount=$((dcount+1))
-		fi
-	done
-done
+cat wget.log | grep Location: > location.log
 
-for ((i=1 ; $i<=28 ; i++))
-do
-	if [[ -f pdkt_kusuma_$i ]]
-	then
-		mv pdkt_kusuma_$i kenangan/kenangan_$kcount
-		kcount=$((kcount+1))
-	fi
-done
 
-cp wget.log wget.log.bak
+mkdir duplicate 
+mkdir kenangan
+
+awk '{ printf("%s\t%02d\n", $2, i + 1); i += 1 }' location.log | sort -n -k1 > file.log
+temp=$(ls duplicate/ |awk -F '_' '{print $2}' | sort -rn | head -1)
+temp1=$(ls kenangan/ |awk -F '_' '{print $2}' | sort -rn | head -1)
+awk -F '\t' -v temp=$temp -v temp1=$temp1 '{ i = $2+0; 
+		if( L != $1 ){
+			  L = $1; 
+			  move = " mv pdkt_kusuma_" i " kenangan/kenangan_" count2+1 ; count2++; }
+				system(move); } 
+  		else if( L == $1 ) { 
+			
+			move = " mv pdkt_kusuma_" i " duplicate/duplicate_" count1+1; count1++; } ' file.log 
+
+for name in *.log; 
+do 
+	mv "$name" "${name%.log}.log.bak"
+done 
