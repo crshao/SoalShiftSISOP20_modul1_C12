@@ -346,7 +346,7 @@ merupakan hasil dari grep "Location".
 ```sh
 cat wget.log | grep Location: > location.log
 ```
-mengcopy tiap isi yang diterima asd.log kedalam location.log
+mengcopy tiap isi yang diterima wget.log kedalam location.log
 
 ```
 mkdir duplicate 
