@@ -232,4 +232,89 @@ echo "$newName"
 mv $x.txt $newName.txt
 ```
 
-+ Pada file dekrip, kebanyakan command yang digunakan mirip dengan pada file enkripsi. Pertama kita declare variable untuk menampung parameter yang disebut a. Kemudian variable jam untuk menampung data yang diambil dari log.csv. Kemudian deklarasi variable untuk menampung huruf ASCII 'a' + jam yang disebut alphabetBeforeValue, dan juga variabel untuk menampung nilai dari karakter ASCII.
++ Pada file dekrip, kebanyakan command yang digunakan mirip dengan pada file enkripsi. Pertama kita declare variable untuk menampung parameter yang disebut a. Kemudian variable jam untuk menampung data yang diambil dari log.csv. Kemudian deklarasi variable untuk menampung huruf ASCII 'a' + jam yang disebut alphabetBeforeValue, dan juga variabel untuk menampung nilai dari karakter ASCII yang disebut alphabetBefore.
+```awk
+x="$1"
+jam=`awk -v x=$x -F ";" 'FNR>1 {if(match($1, x))print $2}' log.csv`
+#alphabet1=`expr $jam + 97`
+alphabetBeforeValue=`expr $jam + 97`
+
+alphabetBefore=`awk -v x=$alphabetBeforeValue 'BEGIN{printf "%c",x}'`
+echo $alphabetBefore
+```
+
++Kemudian declare sebuah variabel untuk menampung nilai dari karakter ASCII, satu huruf sebelum alphabetBefore yang disebut alphabetAfterValue, dan variabel selanjutnya untuk menyimpan karakternya yang disebut alphabetAfter. Pada variabel newName, variabel ini berfungsi untuk menyimpan nama baru yang telah di dekripsi. Kemudian nama tersebut dimasukkan ke log.csv, dan command terakhir adalah untuk me rename file tersebut
+```awk
+alphabetAfterValue=`expr $alphabetBeforeValue - 1`
+
+alphabetAfter=`awk -v x=$alphabetAfterValue 'BEGIN{printf "%c",x}'`
+echo $alphabetAkhir
+echo $x
+
+newName=`echo $x | tr '['$alphabetBefore'-za-'$alphabetAfter']' '[a-z]'`
+
+echo "$newName"
+mv $x.txt $newName.txt
+```
+
+# Soal3
+1 tahun telah berlalu sejak pencampakan hati Kusuma. Akankah sang pujaan hati
+kembali ke naungan Kusuma? Memang tiada maaf bagi Elen. Tapi apa daya hati yang
+sudah hancur, Kusuma masih terguncang akan sikap Elen. Melihat kesedihan Kusuma,
+kalian mencoba menghibur Kusuma dengan mengirimkan gambar kucing. [a] Maka dari
+itu, kalian mencoba membuat script untuk mendownload 28 gambar dari
+"https://loremflickr.com/320/240/cat" menggunakan command wget dan menyimpan file
+dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2,
+pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget kedalam
+sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk
+
+menjalankan script download gambar tersebut. Namun, script download tersebut hanya
+berjalan[b] setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
+gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan
+gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma
+sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar
+identik. Setelah memilah gambar yang identik, maka dihasilkan gambar yang berbeda
+antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
+Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
+selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
+kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi. [c] Maka dari
+itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan
+gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka
+sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate
+dengan format filename "duplicate_nomor" (contoh : duplicate_200, duplicate_201).
+Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder ./kenangan
+dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253).
+Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi
+ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya
+merupakan hasil dari grep "Location".
+#
+
+## Jawab
+a. Maka dari
+itu, kalian mencoba membuat script untuk mendownload 28 gambar dari
+"https://loremflickr.com/320/240/cat" menggunakan command wget dan menyimpan file
+dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2,
+pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget kedalam
+sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk
+
+menjalankan script download gambar tersebut. Namun, script download tersebut hanya
+berjalan
+b. setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
+gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan
+gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma
+sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar
+identik. Setelah memilah gambar yang identik, maka dihasilkan gambar yang berbeda
+antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
+Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
+selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
+kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi.
+c. Maka dari
+itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan
+gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka
+sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate
+dengan format filename "duplicate_nomor" (contoh : duplicate_200, duplicate_201).
+Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder ./kenangan
+dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253).
+Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi
+ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya
+merupakan hasil dari grep "Location".
