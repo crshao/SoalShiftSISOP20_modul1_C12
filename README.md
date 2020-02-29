@@ -296,9 +296,11 @@ itu, kalian mencoba membuat script untuk mendownload 28 gambar dari
 dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2,
 pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget kedalam
 sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk
-
 menjalankan script download gambar tersebut. Namun, script download tersebut hanya
 berjalan
+
+<br>
+
 b. setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
 gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan
 gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma
@@ -308,6 +310,9 @@ antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
 Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
 selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
 kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi.
+
+<br>
+
 c. Maka dari
 itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan
 gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka
@@ -318,3 +323,5 @@ dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253).
 Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi
 ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya
 merupakan hasil dari grep "Location".
+
+<br>
