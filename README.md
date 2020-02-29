@@ -342,3 +342,55 @@ ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isi
 merupakan hasil dari grep "Location".
 
 <br>
+
+```sh
+cat wget.log | grep Location: > location.log
+```
+mengcopy tiap isi yang diterima asd.log kedalam location.log
+
+```
+mkdir duplicate 
+mkdir kenangan
+```
+Untuk membuat file kenangan dan duplicate
+```
+temp=$(ls duplicate/ |awk -F '_' '{print $2}' | sort -rn | head -1)
+temp1=$(ls kenangan/ |awk -F '_' '{print $2}' | sort -rn | head -1)
+```
+Berfungsi untuk membuat variable count yang akan menyimpan indeks angka terakhir nama file yang ada di dalam folder.
+```
+awk '{ printf("%s\t%02d\n", $2, i + 1); i += 1 }' location.log | sort -n -k1 > file.log
+```
+Berungsi untuk mengambil string dari location.log kemudian diletakkan di file file.log dengan menambahkan index dengan format ```%02d``` dengan separator tab.
+``` sort -n -k1``` untuk sorting isi string di file location.org 
+
+```-n ``` untuk mengurutkan secara numerik string
+
+```-k1``` untuk mengurutkan pada kolom ke 1
+```awk -F '\t' -v temp=$temp -v temp1=$temp1 '{ i = $2+0; 
+		if( L != $1 ){
+			  L = $1; 
+			  move = " mv pdkt_kusuma_" i " kenangan/kenangan_" temp1+1 ; temp1++; }
+				system(move); } 
+  		else if( L == $1 ) { 
+			
+			move = " mv pdkt_kusuma_" i " duplicate/duplicate_" temp+1; temp++; } ' file.log 
+
+for name in *.log; 
+do 
+	mv "$name" "${name%.log}.log.bak"
+done
+````
+Selanjutnya yaitu membandingkan string perbaris yang telah di urutkan sebelumnya. Jika berbeda maka akan masuk ke kondisi if dan file di pindah kan ke folder kenangan. Apa bila string yang dibandingkan sama maka file akan dipindahkan ke folder duplicate.
+
+```i = $2+0;``` berfungsi untuk menghilangkan 0 di depan angka index.
+
+```system(move)``` berfungsi untuk menjalankan ```move```
+
+```awk
+for name in *.log; 
+do 
+	mv "$name" "${name%.log}.log.bak"
+done
+```
+untuk mengubah semua name berekstensi .log menjadi ekstensi .log.bak
