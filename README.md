@@ -299,6 +299,16 @@ sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan
 menjalankan script download gambar tersebut. Namun, script download tersebut hanya
 berjalan
 
+```awk
+#!/bin/bash
+
+for (( i=1; i<29; i++ ))
+do
+  wget -O /home/hao/Documents/SistemOperasi/soal3/pdkt_kusuma_$i https://loremflickr.com/320/240/cat -a "wget.log";
+done
+```
++ Kita buat suatu perulangan untuk mendownload file yang berada pada link, perintah wget merupakan perintah untuk mendownload file yang diinginkan, -O merupakan perintah untuk memberi nama pada file kita kemudian di store ke dalam lokasi yang kita inginkan. Dan -a wget.log untuk memasukkan perintah ke dalam log.
+
 <br>
 
 b. setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
