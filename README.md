@@ -243,7 +243,7 @@ alphabetBefore=`awk -v x=$alphabetBeforeValue 'BEGIN{printf "%c",x}'`
 echo $alphabetBefore
 ```
 
-+Kemudian declare sebuah variabel untuk menampung nilai dari karakter ASCII, satu huruf sebelum alphabetBefore yang disebut alphabetAfterValue, dan variabel selanjutnya untuk menyimpan karakternya yang disebut alphabetAfter. Pada variabel newName, variabel ini berfungsi untuk menyimpan nama baru yang telah di dekripsi. Kemudian nama tersebut dimasukkan ke log.csv, dan command terakhir adalah untuk me rename file tersebut
++ Kemudian declare sebuah variabel untuk menampung nilai dari karakter ASCII, satu huruf sebelum alphabetBefore yang disebut alphabetAfterValue, dan variabel selanjutnya untuk menyimpan karakternya yang disebut alphabetAfter. Pada variabel newName, variabel ini berfungsi untuk menyimpan nama baru yang telah di dekripsi. Kemudian nama tersebut dimasukkan ke log.csv, dan command terakhir adalah untuk me rename file tersebut
 ```awk
 alphabetAfterValue=`expr $alphabetBeforeValue - 1`
 
@@ -299,6 +299,8 @@ sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan
 menjalankan script download gambar tersebut. Namun, script download tersebut hanya
 berjalan
 
++ Kita buat suatu perulangan untuk mendownload file yang berada pada link, perintah wget merupakan perintah untuk mendownload file yang diinginkan, -O merupakan perintah untuk memberi nama pada file kita kemudian di store ke dalam lokasi yang kita inginkan. Dan -a wget.log untuk memasukkan perintah ke dalam log.
+
 ```awk
 #!/bin/bash
 
@@ -307,7 +309,6 @@ do
   wget -O /home/hao/Documents/SistemOperasi/soal3/pdkt_kusuma_$i https://loremflickr.com/320/240/cat -a "wget.log";
 done
 ```
-+ Kita buat suatu perulangan untuk mendownload file yang berada pada link, perintah wget merupakan perintah untuk mendownload file yang diinginkan, -O merupakan perintah untuk memberi nama pada file kita kemudian di store ke dalam lokasi yang kita inginkan. Dan -a wget.log untuk memasukkan perintah ke dalam log.
 
 <br>
 
@@ -320,6 +321,12 @@ antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
 Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
 selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
 kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi.
+
++ Untuk menjalankan perintah pada waktu yang diinginkan, kita perlu memasukkan command ke dalam crontab, command tersebut adalah sebagai berikut
+```awk
+5 6-23/8 * * 0-5 /bin/bash /home/hao/Documents/SistemOperasi/soal3/soal3.sh
+```
++ 5 berarti, perintah akan selalu dilakukan pada menit ke 5, 6-23/8 berarti, perintah akan dilakukan mulai jam 6 hingga jam 23, setiap 8 jam sekali, dan 0-5 berarti perintah akan dilakukan setiap hari senin sampai hari jumat.
 
 <br>
 
