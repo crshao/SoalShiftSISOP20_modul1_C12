@@ -94,3 +94,37 @@ awk -F'\t' '{if($11 == "Illinois"|| $11 == "Texas") a[$17]+=$21;}END{for(x=0;x<1
 ```
 
 # Soal2
+Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan
+data-data penting. Untuk mencegah kejadian yang sama terulang kembali mereka
+meminta bantuan kepada Whits karena dia adalah seorang yang punya banyak ide.
+Whits memikirkan sebuah ide namun dia meminta bantuan kalian kembali agar ide
+tersebut cepat diselesaikan. Idenya adalah kalian (a) membuat sebuah script bash yang
+dapat menghasilkan password secara acak sebanyak 28 karakter yang terdapat huruf
+besar, huruf kecil, dan angka. (b) Password acak tersebut disimpan pada file berekstensi
+.txt dengan nama berdasarkan argumen yang diinputkan dan HANYA berupa alphabet.
+(c) Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan di
+enkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
+dengan jam(0-23) dibuatnya file tersebut dengan program terpisah dengan (misal:
+password.txt dibuat pada jam 01.28 maka namanya berubah menjadi qbttxpse.txt
+dengan perintah ‘bash soal2_enkripsi.sh password.txt’. Karena p adalah huruf ke 16 dan
+file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula
+seterusnya. Apabila melebihi z, akan kembali ke a, contoh: huruf w dengan jam 5.28,
+maka akan menjadi huruf b.) dan (d) jangan lupa untuk membuat dekripsinya supaya
+nama file bisa kembali.
+#
+## Jawab
+a. Membuat sebuah script bash yang dapat menghasilkan password secara acak sebanyak 28 karakter yang terdapat huruf
+besar, huruf kecil, dan angka.
+
+```awk
+#!/bin/bash
+a=$(echo $1 | tr -d [:digit:])
+p = "`< /dev/urandom tr -dc A-Z | head -c5`"
+q = "`< /dev/urandom tr -dc a-z | head -c5`"
+r = "`< /dev/urandom tr -dc 0-9 | head -c5`"
+s = "`< /dev/urandom tr -dc A-Za-z0-9 | head -c13`"
+pw = $p$q$r$s
+echo -e $pw > $a.txt
+b=`date +%H`
+echo "$a;$b" >> log.csv
+```
