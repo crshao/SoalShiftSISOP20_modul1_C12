@@ -209,6 +209,7 @@ mv $x.txt $newName.txt
 <br>
 d. jangan lupa untuk membuat dekripsinya supaya
 nama file bisa kembali.
+
 ```awk
 #!/bin/bash
 x="$1"
